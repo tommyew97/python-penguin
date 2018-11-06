@@ -62,25 +62,44 @@ def moveTowardsCenterOfMap(body):
 
 def chooseAction(body):
     action = PASS
-    if standOf(body):
+    bonusTiles = findBonusTiles(body) # Returns a dictionary with the power-ups as keys and an array of their coordinates as tuples i.g. bonusTiles["strength"] => [(1, 2), (7, 3)]
+    nearestCorner = findNearestCorner(body) # On the form (x, y, air_distance)        
+    if standOf(body):                 
         action = SHOOT
     return action
 
 def standOf(body):
+    bodyDirection = body["you"]["direction"]
     xValuePlayer = body["you"]["x"]
     yValuePlayer = body["you"]["y"]
-    bodyDirection = body["you"]["direction"]
+    weaponRangePlayer = body["you"]["weaponRange"]
 
     for enemy in body["enemies"]:
         if bodyDirection == "top":
-            return abs((yValuePlayer - enemy["y"])) < 6
+            return abs((yValuePlayer - enemy["y"])) <= weaponRangePlayer
         elif bodyDirection == "bottom":
-            return abs((enemy["y"] - yValuePlayer)) < 6
+            return abs((enemy["y"] - yValuePlayer)) <= weaponRangePlayer
         elif bodyDirection == "left":
-            return abs((xValuePlayer - enemy["y"])) < 6
+            return abs((xValuePlayer - enemy["y"])) <= weaponRangePlayer
         elif bodyDirection == "right":
-            return abs((enemy["y"] - xValuePlayer)) < 6
+            return abs((enemy["y"] - xValuePlayer)) <= weaponRangePlayer
     return False
+
+def findBonusTiles(body): 
+    bonusTiles = {"strength": [], "weapon-power": [], "weapon-range": []}
+    for bonus in body["bonusTiles"]:
+        bonusTiles[bonus["type"]].append((bonus["x"], bonus["y"]))
+    return bonusTiles
+
+def findNearestCorner(body):
+    xValuePlayer = body["you"]["x"]
+    yValuePlayer = body["you"]["y"]
+    top_left_distance = math.sqrt(xValuePlayer ** 2 + yValuePlayer ** 2)
+    top_right_distance = math.sqrt((body["mapWidth"] - xValuePlayer) ** 2 + yValuePlayer ** 2)
+    bottom_left_distance = math.sqrt(xValuePlayer ** 2 + (body["mapHeight"] - yValuePlayer) ** 2)
+    bottom_right_distance = math.sqrt((body["mapWidth"] - xValuePlayer) ** 2 + (body["mapHeight"] - yValuePlayer) ** 2)
+    choices = [(0, 0, top_left_distance), (body["mapWidth"], 0, top_right_distance), (0, body["mapHeight"], bottom_left_distance), (body["mapWidth"], body["mapHeight"], bottom_right_distance)]
+    return choices.sort()[0]
 
 env = os.environ
 req_params_query = env['REQ_PARAMS_QUERY']
