@@ -110,24 +110,7 @@ def findNearestCorner(body):
     bottom_right_distance = math.sqrt((body["mapWidth"] - xValuePlayer) ** 2 + (body["mapHeight"] - yValuePlayer) ** 2)
     choices = [(0, 0, top_left_distance), (body["mapWidth"], 0, top_right_distance), (0, body["mapHeight"], bottom_left_distance), (body["mapWidth"], body["mapHeight"], bottom_right_distance)]
     return choices.sort(key=lambda tup: tup[2])[0]
-
-env = os.environ
-req_params_query = env['REQ_PARAMS_QUERY']
-responseBody = open(env['res'], 'w')
-
-response = {}
-returnObject = {}
-if req_params_query == "info":
-    returnObject["name"] = "Pingu"
-    returnObject["team"] = "Team Python"
-elif req_params_query == "command":    
-    body = json.loads(open(env["req"], "r").read())
-    returnObject["command"] = chooseAction(body)
-
-response["body"] = returnObject
-responseBody.write(json.dumps(response))
-responseBody.close()
-
+    
 def wallBehindPenguin(body):
     xValueToCheckForWall = body["you"]["x"]
     yValueToCheckForWall = body["you"]["y"]
@@ -152,8 +135,6 @@ def steek(body):
     xValuePlayer = body["you"]["x"]
     yValuePlayer = body["you"]["y"]
     bodyDirectionP = body["you"]["direction"]
-    
-    
     
     if (bodyDirectionE == "bottom") and (xValuePlayer == xValueEnemies) and (0 < (yValuePlayer - yValueEnemies) <= WeaponrangeE):
         if bodyDirectionP == "left" or "right":
@@ -222,3 +203,20 @@ def steek(body):
                 return ADVANCE
             else:
                 return ROTATE_LEFT
+
+env = os.environ
+req_params_query = env['REQ_PARAMS_QUERY']
+responseBody = open(env['res'], 'w')
+
+response = {}
+returnObject = {}
+if req_params_query == "info":
+    returnObject["name"] = "Pingu"
+    returnObject["team"] = "Team Python"
+elif req_params_query == "command":    
+    body = json.loads(open(env["req"], "r").read())
+    returnObject["command"] = chooseAction(body)
+
+response["body"] = returnObject
+responseBody.write(json.dumps(response))
+responseBody.close()
