@@ -62,8 +62,8 @@ def moveTowardsCenterOfMap(body):
 
 def chooseAction(body):
     action = PASS
-    bonusTiles = findBonusTiles(body) # Returns a dictionary with the power-ups as keys and an array of their coordinates as tuples i.g. bonusTiles["strength"] => [(1, 2), (7, 3)]
-    nearestCorner = findNearestCorner(body) # On the form (x, y, air_distance)        
+    #bonusTiles = findBonusTiles(body) # Returns a dictionary with the power-ups as keys and an array of their coordinates as tuples i.g. bonusTiles["strength"] => [(1, 2), (7, 3)]
+    #nearestCorner = findNearestCorner(body) # On the form (x, y, air_distance)        
     action = steek(body)
     
     
