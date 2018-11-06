@@ -66,7 +66,20 @@ def chooseAction(body):
     return action
 
 def standOf(body):
-    return SHOOT
+    xValuePlayer = body["you"]["x"]
+    yValuePlayer = body["you"]["y"]
+    bodyDirection = body["you"]["direction"]
+
+    for enemy in body["enemies"]:
+        if bodyDirection == "top":
+            return (yValuePlayer - enemy["y"]) < 6
+        elif bodyDirection == "bottom":
+            return (enemy["y"] - yValuePlayer) < 6
+        elif bodyDirection == "left":
+            return (xValuePlayer - enemy["y"]) < 6
+        elif bodyDirection == "right":
+            return (enemy["y"] - xValuePlayer) < 6
+    return False
 
 env = os.environ
 req_params_query = env['REQ_PARAMS_QUERY']
