@@ -62,7 +62,8 @@ def moveTowardsCenterOfMap(body):
 
 def chooseAction(body):
     action = PASS
-    action = moveTowardsCenterOfMap(body)
+    if standOf(body):
+        action = SHOOT
     return action
 
 def standOf(body):
@@ -72,13 +73,13 @@ def standOf(body):
 
     for enemy in body["enemies"]:
         if bodyDirection == "top":
-            return (yValuePlayer - enemy["y"]) < 6
+            return abs((yValuePlayer - enemy["y"])) < 6
         elif bodyDirection == "bottom":
-            return (enemy["y"] - yValuePlayer) < 6
+            return abs((enemy["y"] - yValuePlayer)) < 6
         elif bodyDirection == "left":
-            return (xValuePlayer - enemy["y"]) < 6
+            return abs((xValuePlayer - enemy["y"])) < 6
         elif bodyDirection == "right":
-            return (enemy["y"] - xValuePlayer) < 6
+            return abs((enemy["y"] - xValuePlayer)) < 6
     return False
 
 env = os.environ
