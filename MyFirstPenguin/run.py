@@ -62,15 +62,16 @@ def moveTowardsCenterOfMap(body):
 
 def chooseAction(body):
     action = PASS
-    if standOf(body):
+    bonusTiles = findBonusTiles(body) # Returns a dictionary with the power-ups as keys and 
+    if standOf(body):                 # an array of their coordinates as tuples i.g. bonusTiles["strength"] => [(1, 2), (7, 3)]
         action = SHOOT
     return action
 
 def standOf(body):
+    bodyDirection = body["you"]["direction"]
     xValuePlayer = body["you"]["x"]
     yValuePlayer = body["you"]["y"]
     weaponRangePlayer = body["you"]["weaponRange"]
-    bodyDirection = body["you"]["direction"]
 
     for enemy in body["enemies"]:
         if bodyDirection == "top":
