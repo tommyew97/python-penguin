@@ -81,3 +81,5 @@ elif req_params_query == "command":
 response["body"] = returnObject
 responseBody.write(json.dumps(response))
 responseBody.close()
+
+# Nicklas var her
