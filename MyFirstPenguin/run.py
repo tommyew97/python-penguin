@@ -117,3 +117,98 @@ elif req_params_query == "command":
 response["body"] = returnObject
 responseBody.write(json.dumps(response))
 responseBody.close()
+
+def wallBehindPenguin(body):
+    xValueToCheckForWall = body["you"]["x"]
+    yValueToCheckForWall = body["you"]["y"]
+    bodyDirection = body["you"]["direction"]
+
+    if bodyDirection == "top":
+        yValueToCheckForWall += 1
+    elif bodyDirection == "bottom":
+        yValueToCheckForWall -= 1
+    elif bodyDirection == "left":
+        xValueToCheckForWall += 1
+    elif bodyDirection == "right":
+        xValueToCheckForWall -= 1
+    return doesCellContainWall(body["walls"], xValueToCheckForWall, yValueToCheckForWall)
+
+def steek(body):
+    xValueEnemies = body["enemies"]["x"]
+    yValueEnemies = body["enemies"]["y"]
+    bodyDirectionE = body["enemies"]["direction"]
+    WeaponrangeE = body["enemies"]["weaponRange"]
+    
+    xValuePlayer = body["you"]["x"]
+    yValuePlayer = body["you"]["y"]
+    bodyDirectionP = body["you"]["direction"]
+    
+    
+    
+    if (bodyDirectionE == "bottom") and (xValuePlayer == xValueEnemies) and (0 < (yValuePlayer - yValueEnemies) <= WeaponrangeE):
+        if bodyDirectionP == "left" or "right":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            elif wallBehindPenguin(body) == False:
+                return RETREAT
+            else:
+                if bodyDirectionP == "left":
+                    return ROTATE_RIGHT
+                else:
+                    return ROTATE_LEFT
+        if bodyDirectionP == "bottom":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            else:
+                return ROTATE_LEFT
+    
+    if (bodyDirectionE == "top") and (xValuePlayer == xValueEnemies) and (0 < (yValueEnemies - yValuePlayer) <= WeaponrangeE):
+        if bodyDirectionP == "left" or "right":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            elif wallBehindPenguin(body) == False:
+                return RETREAT
+            else:
+                if bodyDirectionP == "left":
+                    return ROTATE_LEFT
+                else:
+                    return ROTATE_RIGHT
+        if bodyDirectionP == "top":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            else:
+                return ROTATE_LEFT
+        
+    if (bodyDirectionE == "left") and (yValuePlayer == yValueEnemies) and (0 < (xValueEnemies - xValuePlayer) <= WeaponrangeE):
+        if bodyDirectionP == "top" or "bottom":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            elif wallBehindPenguin(body) == False:
+                return RETREAT
+            else:
+                if bodyDirectionP == "top":
+                    return ROTATE_RIGHT
+                else:
+                    return ROTATE_LEFT
+        if bodyDirectionP == "left":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            else:
+                return ROTATE_LEFT
+            
+    if (bodyDirectionE == "right") and (yValuePlayer == yValueEnemies) and (0 < (xValuePlayer - xValueEnemies) <= WeaponrangeE):
+        if bodyDirectionP == "top" or "bottom":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            elif wallBehindPenguin(body) == False:
+                return RETREAT
+            else:
+                if bodyDirectionP == "bottom":
+                    return ROTATE_RIGHT
+                else:
+                    return ROTATE_LEFT
+        if bodyDirectionP == "right":
+            if wallInFrontOfPenguin(body) == False:
+                return ADVANCE
+            else:
+                return ROTATE_LEFT
