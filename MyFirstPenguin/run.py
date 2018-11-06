@@ -88,6 +88,14 @@ def standOf(body):
                 return 0 < enemy["y"] - xValuePlayer <= weaponRangePlayer
     return False
 
+def inCorner(body):
+    xValuePlayer = body["you"]["x"]
+    yValuePlayer = body["you"]["y"]
+    walls = body["walls"]
+    horizontal = doesCellContainWall(walls, xValuePlayer - 1, yValuePlayer) or doesCellContainWall(walls, xValuePlayer + 1, yValuePlayer)
+    vertical = doesCellContainWall(walls, xValuePlayer, yValuePlayer - 1) or doesCellContainWall(walls, xValuePlayer, yValuePlayer + 1)
+    return horizontal and vertical
+
 def findBonusTiles(body): 
     bonusTiles = {"strength": [], "weapon-power": [], "weapon-range": []}
     for bonus in body["bonusTiles"]:
