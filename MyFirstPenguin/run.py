@@ -65,6 +65,9 @@ def chooseAction(body):
     action = moveTowardsCenterOfMap(body)
     return action
 
+def standOf(body):
+    return SHOOT
+
 env = os.environ
 req_params_query = env['REQ_PARAMS_QUERY']
 responseBody = open(env['res'], 'w')
@@ -81,5 +84,3 @@ elif req_params_query == "command":
 response["body"] = returnObject
 responseBody.write(json.dumps(response))
 responseBody.close()
-
-# Nicklas var her
