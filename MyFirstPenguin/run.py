@@ -69,18 +69,26 @@ def chooseAction(body):
 def standOf(body):
     xValuePlayer = body["you"]["x"]
     yValuePlayer = body["you"]["y"]
+    weaponRangePlayer = body["you"]["weaponRange"]
     bodyDirection = body["you"]["direction"]
 
     for enemy in body["enemies"]:
         if bodyDirection == "top":
-            return abs((yValuePlayer - enemy["y"])) < 6
+            return abs((yValuePlayer - enemy["y"])) <= weaponRangePlayer
         elif bodyDirection == "bottom":
-            return abs((enemy["y"] - yValuePlayer)) < 6
+            return abs((enemy["y"] - yValuePlayer)) <= weaponRangePlayer
         elif bodyDirection == "left":
-            return abs((xValuePlayer - enemy["y"])) < 6
+            return abs((xValuePlayer - enemy["y"])) <= weaponRangePlayer
         elif bodyDirection == "right":
-            return abs((enemy["y"] - xValuePlayer)) < 6
+            return abs((enemy["y"] - xValuePlayer)) <= weaponRangePlayer
     return False
+
+def findBonusTiles(body): 
+    bonusTiles = {"strength": [], "weapon-power": [], "weapon-range": []}
+    for bonus in body["bonusTiles"]:
+        bonusTiles[bonus["type"]].append((bonus["x"], bonus["y"]))
+    return bonusTiles
+
 
 env = os.environ
 req_params_query = env['REQ_PARAMS_QUERY']
