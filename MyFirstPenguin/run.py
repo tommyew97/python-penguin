@@ -76,14 +76,16 @@ def standOf(body):
     weaponRangePlayer = body["you"]["weaponRange"]
 
     for enemy in body["enemies"]:
-        if bodyDirection == "top":
-            return abs((yValuePlayer - enemy["y"])) <= weaponRangePlayer
-        elif bodyDirection == "bottom":
-            return abs((enemy["y"] - yValuePlayer)) <= weaponRangePlayer
-        elif bodyDirection == "left":
-            return abs((xValuePlayer - enemy["y"])) <= weaponRangePlayer
-        elif bodyDirection == "right":
-            return abs((enemy["y"] - xValuePlayer)) <= weaponRangePlayer
+        if enemy["x"] == xValuePlayer:
+            if bodyDirection == "top":
+                return 0 < yValuePlayer - enemy["y"] <= weaponRangePlayer
+            elif bodyDirection == "bottom":
+                return 0 < yValuePlayer - enemy["y"] <= weaponRangePlayer
+        elif enemy["y"] == yValuePlayer:
+            if bodyDirection == "left":
+                return 0 < xValuePlayer - enemy["x"] <= weaponRangePlayer
+            elif bodyDirection == "right":
+                return 0 < enemy["y"] - xValuePlayer <= weaponRangePlayer
     return False
 
 def findBonusTiles(body): 
@@ -100,7 +102,7 @@ def findNearestCorner(body):
     bottom_left_distance = math.sqrt(xValuePlayer ** 2 + (body["mapHeight"] - yValuePlayer) ** 2)
     bottom_right_distance = math.sqrt((body["mapWidth"] - xValuePlayer) ** 2 + (body["mapHeight"] - yValuePlayer) ** 2)
     choices = [(0, 0, top_left_distance), (body["mapWidth"], 0, top_right_distance), (0, body["mapHeight"], bottom_left_distance), (body["mapWidth"], body["mapHeight"], bottom_right_distance)]
-    return choices.sort()[0]
+    return choices.sort(key=lambda tup: tup[2])[0]
 
 env = os.environ
 req_params_query = env['REQ_PARAMS_QUERY']
