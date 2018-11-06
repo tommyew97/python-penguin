@@ -75,14 +75,16 @@ def standOf(body):
     weaponRangePlayer = body["you"]["weaponRange"]
 
     for enemy in body["enemies"]:
-        if bodyDirection == "top":
-            return abs((yValuePlayer - enemy["y"])) <= weaponRangePlayer
-        elif bodyDirection == "bottom":
-            return abs((enemy["y"] - yValuePlayer)) <= weaponRangePlayer
-        elif bodyDirection == "left":
-            return abs((xValuePlayer - enemy["y"])) <= weaponRangePlayer
-        elif bodyDirection == "right":
-            return abs((enemy["y"] - xValuePlayer)) <= weaponRangePlayer
+        if enemy["x"] == xValuePlayer:
+            if bodyDirection == "top":
+                return 0 < yValuePlayer - enemy["y"] <= weaponRangePlayer
+            elif bodyDirection == "bottom":
+                return 0 < yValuePlayer - enemy["y"] <= weaponRangePlayer
+        elif enemy["y"] == yValuePlayer:
+            if bodyDirection == "left":
+                return 0 < xValuePlayer - enemy["x"] <= weaponRangePlayer
+            elif bodyDirection == "right":
+                return 0 < enemy["y"] - xValuePlayer <= weaponRangePlayer
     return False
 
 def findBonusTiles(body): 
