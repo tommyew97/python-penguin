@@ -133,10 +133,11 @@ def moveTowardsNearestCorner(body):
 
 
 def steek(body):
-    xValueEnemies = body["enemies"]["x"]
-    yValueEnemies = body["enemies"]["y"]
-    bodyDirectionE = body["enemies"]["direction"]
-    WeaponrangeE = body["enemies"]["weaponRange"]
+    for enemy in body["enemies"]:
+        xValueEnemies = enemy["x"]
+        yValueEnemies = enemy["y"]
+        bodyDirectionE = enemy["direction"]
+        WeaponrangeE = enemy["weaponRange"]
     
     xValuePlayer = body["you"]["x"]
     yValuePlayer = body["you"]["y"]
