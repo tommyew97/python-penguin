@@ -159,7 +159,7 @@ def steek(body):
             else:
                 return ROTATE_LEFT
     
-    if (bodyDirectionE == "top") and (xValuePlayer == xValueEnemies) and (0 < (yValueEnemies - yValuePlayer) <= WeaponrangeE):
+    elif (bodyDirectionE == "top") and (xValuePlayer == xValueEnemies) and (0 < (yValueEnemies - yValuePlayer) <= WeaponrangeE):
         if bodyDirectionP == "left" or "right":
             if wallInFrontOfPenguin(body) == False:
                 return ADVANCE
@@ -176,7 +176,7 @@ def steek(body):
             else:
                 return ROTATE_LEFT
         
-    if (bodyDirectionE == "left") and (yValuePlayer == yValueEnemies) and (0 < (xValueEnemies - xValuePlayer) <= WeaponrangeE):
+    elif (bodyDirectionE == "left") and (yValuePlayer == yValueEnemies) and (0 < (xValueEnemies - xValuePlayer) <= WeaponrangeE):
         if bodyDirectionP == "top" or "bottom":
             if wallInFrontOfPenguin(body) == False:
                 return ADVANCE
@@ -193,7 +193,7 @@ def steek(body):
             else:
                 return ROTATE_LEFT
             
-    if (bodyDirectionE == "right") and (yValuePlayer == yValueEnemies) and (0 < (xValuePlayer - xValueEnemies) <= WeaponrangeE):
+    elif (bodyDirectionE == "right") and (yValuePlayer == yValueEnemies) and (0 < (xValuePlayer - xValueEnemies) <= WeaponrangeE):
         if bodyDirectionP == "top" or "bottom":
             if wallInFrontOfPenguin(body) == False:
                 return ADVANCE
@@ -213,6 +213,8 @@ def steek(body):
 # --------------- Main-method ---------------
 def chooseAction(body):
     action = moveTowardsNearestCorner(body)
+    action = steek(body)
+    
     return action
 
 env = os.environ
