@@ -98,7 +98,9 @@ def findNearestCorner(body):
     top_right_distance = math.sqrt((body["mapWidth"] - xValuePlayer) ** 2 + yValuePlayer ** 2)
     bottom_left_distance = math.sqrt(xValuePlayer ** 2 + (body["mapHeight"] - yValuePlayer) ** 2)
     bottom_right_distance = math.sqrt((body["mapWidth"] - xValuePlayer) ** 2 + (body["mapHeight"] - yValuePlayer) ** 2)
+    print(top_left_distance, top_right_distance, bottom_left_distance, bottom_right_distance)
     choices = [(0, 0, top_left_distance), (body["mapWidth"], 0, top_right_distance), (0, body["mapHeight"], bottom_left_distance), (body["mapWidth"], body["mapHeight"], bottom_right_distance)]
+    print(choices)
     return choices.sort(key=lambda tup: tup[2])[0]
 
 # --------------- Move-methods ---------------
