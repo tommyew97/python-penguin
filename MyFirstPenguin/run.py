@@ -102,7 +102,27 @@ def findNearestCorner(body):
     choices = [(0, 0, top_left_distance), (body["mapWidth"] - 1, 0, top_right_distance), (0, body["mapHeight"] - 1, bottom_left_distance), (body["mapWidth"] - 1, body["mapHeight"] - 1, bottom_right_distance)]
     return sorted(choices, key=lambda tup: tup[2])[0]
 
+
+def nearestBonusTiles(body):
+    tiles = findBonusTiles(body)
+    youX = body["you"]["x"]
+    youY = body["you"]["y"]
+    x = 100
+    for key in tiles:
+        if len(tiles[key]) > 0:
+            tup = tiles[key]
+            avstand = (abs(tup[0] - youX) + abs(tup[1] - youY))
+            if avstand < x:
+                x = avstand
+                minst = tup
+    return minst
+
 # --------------- Move-methods ---------------
+def moveTowardsBonusTiles(body):
+    (x, y) = nearestBonusTiles(body)
+    return moveTowardsPoint(body, x, y)
+
+
 def moveTowardsPoint(body, pointX, pointY):
     penguinPositionX = body["you"]["x"]
     penguinPositionY = body["you"]["y"]
@@ -280,6 +300,7 @@ def chooseAction(body):
     else:
         print("Not in corner")
         action = moveTowardsNearestCorner(body)
+    action = moveTowardsBonusTiles(body)
     # action = steek(body)
     
     return action
