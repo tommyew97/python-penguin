@@ -59,9 +59,16 @@ def inCorner(body):
     xValuePlayer = body["you"]["x"]
     yValuePlayer = body["you"]["y"]
     walls = body["walls"]
-    horizontal = doesCellContainWall(walls, xValuePlayer - 1, yValuePlayer) or doesCellContainWall(walls, xValuePlayer + 1, yValuePlayer)
-    vertical = doesCellContainWall(walls, xValuePlayer, yValuePlayer - 1) or doesCellContainWall(walls, xValuePlayer, yValuePlayer + 1)
-    return horizontal and vertical
+    if xValuePlayer == 0 and yValuePlayer ==0:
+        return True
+    elif (xValuePlayer, yValuePlayer) == (body["mapWidth"] - 1, 0):
+        return True
+    elif (xValuePlayer, yValuePlayer) == (0, body["mapWidth"] - 1):
+        return True
+    elif (xValuePlayer, yValuePlayer) == (body["mapWidth"] - 1, body["mapWidth"] - 1):
+        return True
+    else:
+        return False
 
 
 def standOf(body):
