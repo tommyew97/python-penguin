@@ -131,6 +131,38 @@ def moveTowardsNearestCorner(body):
     (xCorner, yCorner, distance) = findNearestCorner(body)
     return moveTowardsPoint(body, xCorner, yCorner)
 
+def turnTowardsEnemy(body):
+    plannedAction = SHOOT
+    xValuePlayer = body["you"]["x"]
+    yValuePlayer = body["you"]["y"]
+    bodyDirectionP = body["you"]["direction"]
+
+    for enemy in body["enemies"]:
+        dx = abs(xValuePlayer-enemy["x"])
+        dy = abs(yValuePlayer-enemy["y"])
+
+        if (xValuePlayer, yValuePlayer) == (0, 0):
+            if dx < dy:
+                plannedAction = SHOOT if bodyDirectionP == "bottom" else ROTATE_LEFT
+            else: 
+                plannedAction = SHOOT if bodyDirectionP == "right" else ROTATE_RIGHT
+        if (xValuePlayer, yValuePlayer) == (body["mapWidth"] - 1, 0):
+            if dx < dy:
+                plannedAction = SHOOT if bodyDirectionP == "bottom" else ROTATE_LEFT
+            else: 
+                plannedAction = SHOOT if bodyDirectionP == "left" else ROTATE_RIGHT
+        if (xValuePlayer, yValuePlayer) == (0, body["mapWidth"] - 1):
+            if dx < dy:
+                plannedAction = SHOOT if bodyDirectionP == "top" else ROTATE_LEFT
+            else: 
+                plannedAction = SHOOT if bodyDirectionP == "right" else ROTATE_RIGHT
+        if (xValuePlayer, yValuePlayer) == (body["mapWidth"] - 1, body["mapWidth"] - 1):
+            if dx < dy:
+                plannedAction = SHOOT if bodyDirectionP == "left" else ROTATE_LEFT
+            else: 
+                plannedAction = SHOOT if bodyDirectionP == "top" else ROTATE_RIGHT
+        return plannedAction
+
 
 def steek(body):
     xValueEnemies = body["enemies"]["x"]
