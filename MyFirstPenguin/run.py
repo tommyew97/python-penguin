@@ -217,7 +217,7 @@ def turnTowardsEnemy(body):
                 plannedAction = SHOOT if bodyDirectionP == "left" else ROTATE_LEFT
             else: 
                 plannedAction = SHOOT if bodyDirectionP == "top" else ROTATE_RIGHT
-        return plannedAction
+    return plannedAction
 
 
 def steek(body):
