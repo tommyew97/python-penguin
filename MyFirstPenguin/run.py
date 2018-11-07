@@ -88,6 +88,7 @@ def findBonusTiles(body):
     bonusTiles = {"strength": [], "weapon-power": [], "weapon-range": []}
     for bonus in body["bonusTiles"]:
         bonusTiles[bonus["type"]].append((bonus["x"], bonus["y"]))
+    del bonusTiles['strength']
     return bonusTiles
 
 
