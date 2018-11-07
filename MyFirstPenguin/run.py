@@ -93,6 +93,10 @@ def findBonusTiles(body):
         bonusTiles[bonus["type"]].append((bonus["x"], bonus["y"]))
     return bonusTiles
 
+def moveTowardsNearestCorner(body):
+    (xCorner, yCorner, distance) = findNearestCorner(body)
+    return moveTowardsPoint(body, xCorner, yCorner)
+
 def findNearestCorner(body):
     xValuePlayer = body["you"]["x"]
     yValuePlayer = body["you"]["y"]
