@@ -131,6 +131,32 @@ def moveTowardsNearestCorner(body):
     (xCorner, yCorner, distance) = findNearestCorner(body)
     return moveTowardsPoint(body, xCorner, yCorner)
 
+def turnFromCorner(body):
+    penguinPositionX = body["you"]["x"]
+    penguinPositionY = body["you"]["y"]
+    bodyDirectionP = body["you"]["direction"]
+
+    if (penguinPositionX, penguinPositionY) == (0, 0):
+        if bodyDirectionP == "top":
+            return ROTATE_RIGHT
+        if bodyDirectionP == "left":
+            return  ROTATE_LEFT
+    if (penguinPositionX, penguinPositionY) == (body["mapWidth"] - 1, 0):
+        if bodyDirectionP == "top":
+            return ROTATE_LEFT
+        if bodyDirectionP == "right":
+            return ROTATE_RIGHT
+    if (penguinPositionX, penguinPositionY) == (0, body["mapWidth"] - 1):
+        if bodyDirectionP == "bottom":
+            return ROTATE_LEFT
+        if bodyDirectionP == "left":
+            return ROTATE_RIGHT
+    if (penguinPositionX, penguinPositionY) == (body["mapWidth"] - 1, body["mapWidth"] - 1):
+        if bodyDirectionP == "bottom":
+            return ROTATE_RIGHT
+        if bodyDirectionP == "right":
+            return ROTATE_LEFT
+
 def turnTowardsEnemy(body):
     plannedAction = SHOOT
     xValuePlayer = body["you"]["x"]
