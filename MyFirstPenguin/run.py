@@ -307,9 +307,8 @@ def chooseAction(body):
     else:
         print("Not in corner")
         action = moveTowardsNearestCorner(body)
-    action = moveTowardsBonusTiles(body)
+    # action = moveTowardsBonusTiles(body)
     # action = steek(body)
-    
     return action
 
 env = os.environ
