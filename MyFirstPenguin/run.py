@@ -131,6 +131,7 @@ def moveTowardsNearestCorner(body):
     (xCorner, yCorner, distance) = findNearestCorner(body)
     return moveTowardsPoint(body, xCorner, yCorner)
 
+
 def turnFromCorner(body):
     penguinPositionX = body["you"]["x"]
     penguinPositionY = body["you"]["y"]
@@ -156,6 +157,7 @@ def turnFromCorner(body):
             return ROTATE_RIGHT
         if bodyDirectionP == "right":
             return ROTATE_LEFT
+    return turnTowardsEnemy(body)
 
 def turnTowardsEnemy(body):
     plannedAction = SHOOT
@@ -272,7 +274,9 @@ def steek(body):
 # --------------- Main-method ---------------
 def chooseAction(body):
     action = moveTowardsNearestCorner(body)
-    action = steek(body)
+    if inCorner(body):
+        action = turnFromCorner(body)
+    # action = steek(body)
     
     return action
 
