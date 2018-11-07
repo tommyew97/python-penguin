@@ -273,10 +273,13 @@ def steek(body):
                 return ROTATE_LEFT
 
 # --------------- Main-method ---------------
-def chooseAction(body):
-    action = moveTowardsNearestCorner(body)
+def chooseAction(body):  
     if inCorner(body):
+        print("In corner")
         action = turnFromCorner(body)
+    else:
+        print("Not in corner")
+        action = moveTowardsNearestCorner(body)
     # action = steek(body)
     
     return action
