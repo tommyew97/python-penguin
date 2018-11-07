@@ -199,9 +199,9 @@ def turnTowardsEnemy(body):
 
         if (xValuePlayer, yValuePlayer) == (0, 0):
             if dx < dy:
-                plannedAction = SHOOT if bodyDirectionP == "bottom" else ROTATE_LEFT
+                plannedAction = SHOOT if bodyDirectionP == "bottom" else ROTATE_RIGHT
             else: 
-                plannedAction = SHOOT if bodyDirectionP == "right" else ROTATE_RIGHT
+                plannedAction = SHOOT if bodyDirectionP == "right" else ROTATE_LEFT
         if (xValuePlayer, yValuePlayer) == (body["mapWidth"] - 1, 0):
             if dx < dy:
                 plannedAction = SHOOT if bodyDirectionP == "bottom" else ROTATE_LEFT
